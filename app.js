@@ -4,9 +4,9 @@ const express = require('express')
 var bodyParser = require('body-parser');
 var app = express()
 
-require('./app/routes/routes')(app)
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
+require('./app/routes/routes')(app)
 /**
 * Configurar cabeceras y cors
 * Siempre se ejecuta esto antes de cada petición

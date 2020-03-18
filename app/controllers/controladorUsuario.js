@@ -70,6 +70,7 @@ var controlerUser = {
   **/
   modUser: async (req, res) => {
     console.log(req.body)
+    console.log(req.params.id)
     await User.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, userUpdate) => {
       if (err) return res.status(500).send({ mensaje: 'Error al actualizar el  usuario' })
       if (!userUpdate) return res.status(404).send({ mensaje: 'No se encontró el usuarios' })
