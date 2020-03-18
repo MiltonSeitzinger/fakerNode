@@ -44,6 +44,16 @@ var controlerUser = {
       if(!saveUser) res.status(404).send({ mensaje: 'No se ha podido guardar el usuario' })
       return res.status(200).send({ mensaje: saveUser })
     })
+  },
+  /**
+  * Método para mostrar todos los usuarios
+  **/
+  getUsers: async (req, res) => {
+    User.find({}).exec((err, usuarios) => {
+      if (err) res.status(500).send({ mensaje: 'Error al guardar el usuario' })
+      if (!usuarios) res.status(404).send({ mensaje: 'No se encontro los usuarios' })
+      return res.status(200).send({ usuarios: usuarios})
+    })
   }
 }
 
