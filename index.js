@@ -6,7 +6,7 @@ var port = process.env.PORT || 3000
 var url = process.env.URLDB
 
 mongoose.Promise = global.Promise
-mongoose.createConnection(url, {useNewUrlParser: true, useUnifiedTopology: true } )
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true } )
   .then(() => {
     console.log('Conexión con la base de datos establecida')
 
