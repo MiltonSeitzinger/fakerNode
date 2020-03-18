@@ -40,19 +40,40 @@ var controlerUser = {
     user.internet.passsword = faker.internet.password()
     user.internet.webSite = faker.internet.url()
     user.save((err, saveUser) => {
-      if (err) res.status(500).send({ mensaje: 'Error al guardar el usuario' })
-      if(!saveUser) res.status(404).send({ mensaje: 'No se ha podido guardar el usuario' })
+      if (err) return res.status(500).send({ mensaje: 'Error al guardar el usuario' })
+      if(!saveUser) return res.status(404).send({ mensaje: 'No se ha podido guardar el usuario' })
       return res.status(200).send({ mensaje: saveUser })
     })
   },
   /**
-  * Método para mostrar todos los usuarios
+  * Método para mostrar todos los usuarios.
   **/
   getUsers: async (req, res) => {
-    User.find({}).exec((err, usuarios) => {
-      if (err) res.status(500).send({ mensaje: 'Error al guardar el usuario' })
-      if (!usuarios) res.status(404).send({ mensaje: 'No se encontro los usuarios' })
+    await User.find({}).exec((err, usuarios) => {
+      if (err) return res.status(500).send({ mensaje: 'Error al buscar los usuarios' })
+      if (!usuarios) return res.status(404).send({ mensaje: 'No se encontraron los usuarios' })
       return res.status(200).send({ usuarios: usuarios})
+    })
+  },
+  /**
+  * Método qu elista el usuario por su id.
+  **/
+  getUser: async (req, res) =>{
+    await User.findById(req.params.id, (err, usuario) => {
+      if (err) return res.status(500).send({ mensaje: 'Error al buscar los usuario' })
+      if (!usuario) return res.status(404).send({ mensaje: 'No se encontró el usuarios' })
+      return res.status(200).send({ usuario: usuario})
+    })
+  },
+  /**
+  * Modificar Usuario
+  **/
+  modUser: async (req, res) => {
+    console.log(req.body)
+    await User.findByIdAndUpdate(req.params.id, req.body, {new:true}, (err, userUpdate) => {
+      if (err) return res.status(500).send({ mensaje: 'Error al actualizar el  usuario' })
+      if (!userUpdate) return res.status(404).send({ mensaje: 'No se encontró el usuarios' })
+      return res.status(200).send({ usuario_actualizado: userUpdate})
     })
   }
 }
